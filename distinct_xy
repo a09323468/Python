@@ -1,0 +1,47 @@
+import pymysql
+import json
+import os
+import re
+import requests
+import pandas
+from collections import OrderedDict
+
+
+# 建立conn連線到本地端資訊
+conn = pymysql.connect(host="localhost",
+                       user="root",
+                       passwd="passwd",
+                       database="database",
+                       charset="utf8")
+
+# 使用 cursor() 方法建立一個遊標物件 cursor
+cursor = conn.cursor()
+
+
+def distinct_xy():
+    try:
+        find_goods = input("輸入商品名字:")
+        #find_goods = "泡麵"
+        find_goods = [find_goods]
+
+        # mysql 執行查詢語句
+        cursor.execute("select  aisle, x, y  from C_11 where goods=%s", find_goods)
+        # 獲取所有記錄列表
+        result = cursor.fetchall()
+
+        # 去除重複
+        unique = list(OrderedDict.fromkeys(result))
+        print(unique)
+
+    except TypeError:
+        print('null')
+
+    finally:
+    # 關閉Cursor物件
+    cursor.close()
+
+    # 關閉Connection物件
+    conn.close()
+    return distinct_xy
+if __name__ == '__main__':
+    distinct_xy()
