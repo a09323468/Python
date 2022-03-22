@@ -1,0 +1,10 @@
+import pandas as pd
+
+filename = r"C:\Users\Tibame_T14\Desktop\C_6.csv"
+#read_csv
+df = pd.read_csv(filename, sep=',', encoding="utf-8")
+
+#readlines
+with open(filename, 'r') as f:
+    for i in f.readlines():
+        print(i)
